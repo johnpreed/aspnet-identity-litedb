@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>AspNet.Identity.LiteDB</id>
+    <version>1.0.0</version>
+    <authors>John Reed</authors>
+    <owners>John Reed</owners>
+    <licenseUrl>https://github.com/johnpreed/aspnet-identity-litedb/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/johnpreed/aspnet-identity-litedb</projectUrl>
+    <iconUrl>https://github.com/johnpreed/aspnet-identity-litedb</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>A LiteDB provider for the ASP.NET Identity framework.</description>
+    <releaseNotes></releaseNotes>
+    <copyright>MIT</copyright>
+    <tags>LiteDB aspnet identity</tags>
+  </metadata>
+</package>
