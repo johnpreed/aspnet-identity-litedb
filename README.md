@@ -18,44 +18,34 @@ Install-Package AspNet.Identity.LiteDB
 4. Add the following class to the App_Start folder
 
 ```
-namespace IdentitySample
+namespace YourNamespace
 {
 	using System;
-	using System.Collections.Generic;
-	using System.Threading.Tasks;
+	using System.Web.Hosting;
 	using AspNet.Identity.LiteDB;
 	using LiteDB;
 	using Models;
 
-	public class ApplicationIdentityContext : IDisposable
+	public class DbContext : IDisposable
 	{
-		public static ApplicationIdentityContext Create()
+		private readonly LiteDatabase _database;
+
+		public DbContext()
 		{
-			// todo add settings where appropriate to switch server & database in your own application
-			var database = new LiteDatabase("YourDatabase.db");
-			var users = database.GetCollection<ApplicationUser>("users");
-			var roles = database.GetCollection<IdentityRole>("roles");
-			return new ApplicationIdentityContext(users, roles);
+			// TODO: path to your database here
+			_database = new LiteDatabase(HostingEnvironment.MapPath("/App_Data/Chainline.db"));
 		}
 
-		private ApplicationIdentityContext(LiteCollection<ApplicationUser> users, LiteCollection<IdentityRole> roles)
+		public static DbContext Create()
 		{
-			Users = users;
-			Roles = roles;
+		    return new DbContext();
 		}
 
-		public LiteCollection<IdentityRole> Roles { get; set; }
+		public LiteCollection<ApplicationUser> Users => _database.GetCollection<ApplicationUser>("users");
 
-		public LiteCollection<ApplicationUser> Users { get; set; }
+		public LiteCollection<IdentityRole> Roles => _database.GetCollection<IdentityRole>("roles");
 
-		public Task<List<IdentityRole>> AllRolesAsync()
-		{
-			return Task.FromResult(Roles.FindAll().ToList());
-		}
-
-		public void Dispose()
-		{
-		}
+		public void Dispose() { }
 	}
 }
 ```
@@ -68,7 +58,7 @@ namespace IdentitySample
     - In the ApplicationUserManager.Create() method, replace the line:
         - ```var manager = new ApplicationUserManager(new UserStore<ApplicationUser>(context.Get<ApplicationDbContext>()));```
         - with:
-        - ```var manager = new ApplicationUserManager(new UserStore<ApplicationUser>(context.Get<ApplicationIdentityContext>().Users));```
+        - ```var manager = new ApplicationUserManager(new UserStore<ApplicationUser>(context.Get<DbContext>().Users));```
 
 ... More to come...
 
