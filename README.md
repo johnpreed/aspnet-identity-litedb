@@ -52,7 +52,7 @@ namespace YourNamespace
 5. In Startup.Auth.cs replace the following line:
     - ```app.CreatePerOwinContext(ApplicationDbContext.Create);```
     - with:
-    - ```app.CreatePerOwinContext(ApplicationIdentityContext.Create);```
+    - ```app.CreatePerOwinContext(DbContext.Create);```
 6. In IdentityConfig.cs:
     - Remove the namespace: Microsoft.AspNet.Identity.EntityFramework
     - In the ApplicationUserManager.Create() method, replace the line:
